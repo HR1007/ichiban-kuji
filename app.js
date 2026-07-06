@@ -7,11 +7,11 @@ const DEFAULT_CONFIG = {
   sub:    '表面の店舗有口を確認の上、商品をお渡し下さい',
   note:   '※ 購入店舗のみ有効',
   prizes: [
-    { rank: 'A', name: '澳門來回機票',  color: '#e8c840', count: 1 },
-    { rank: 'B', name: '精品手錶',       color: '#c0a0e8', count: 2 },
-    { rank: 'C', name: '安全的安全帽',   color: '#4fa3e8', count: 3 },
-    { rank: 'D', name: '限定周邊組合',   color: '#e87040', count: 4 },
-    { rank: 'E', name: '特製馬克杯',     color: '#50c878', count: 5 },
+    { rank: 'A', name: '大獎',  color: '#e8c840', count: 1 },
+    { rank: 'B', name: '二等獎',       color: '#c0a0e8', count: 2 },
+    { rank: 'C', name: '三等獎',   color: '#4fa3e8', count: 3 },
+    { rank: 'D', name: '四等獎',   color: '#e87040', count: 4 },
+    { rank: 'E', name: '五等獎',     color: '#50c878', count: 5 },
   ],
 };
 
