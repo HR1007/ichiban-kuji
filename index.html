@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>一番賞抽獎券</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- ══ 主畫面：抽獎大廳 ══ -->
+<div id="viewLobby" class="view active">
+  <header class="lobby-header">
+    <div class="lobby-title-row">
+      <span class="lobby-jp">一番賞</span>
+      <h1 class="lobby-title" id="lobbyTitle">抽獎活動</h1>
+    </div>
+    <button class="icon-btn" id="btnSettings" onclick="openSettings()">⚙️</button>
+  </header>
+
+  <div class="prize-summary" id="prizeSummary"></div>
+
+  <div class="tickets-area" id="ticketsArea"></div>
+
+  <div class="lobby-footer">
+    <div class="remain-count">
+      剩餘 <span id="remainCount">0</span> 張
+    </div>
+    <button class="btn-reset" onclick="confirmReset()">重置抽獎</button>
+  </div>
+</div>
+
+<!-- ══ 撕票畫面 ══ -->
+<div id="viewTicket" class="view">
+  <div class="ticket-stage" id="ticketStage">
+    <!-- ticket rendered by JS -->
+  </div>
+  <div class="tear-hint" id="tearHint">
+    <span>👆 向上拖曳撕開</span>
+  </div>
+</div>
+
+<!-- ══ 揭曉畫面 ══ -->
+<div id="viewReveal" class="view">
+  <div class="reveal-wrap" id="revealWrap">
+    <div class="reveal-burst" id="revealBurst"></div>
+    <div class="reveal-card" id="revealCard"></div>
+    <button class="btn-back" onclick="backToLobby()">← 繼續抽</button>
+  </div>
+</div>
+
+<!-- ══ 設定 Modal ══ -->
+<div class="modal-overlay" id="modalSettings" onclick="closeIfBg(event,'modalSettings')">
+  <div class="modal-sheet">
+    <div class="modal-handle"></div>
+    <div class="modal-hdr">
+      <span class="modal-title">設定抽獎</span>
+      <button class="modal-close" onclick="closeModal('modalSettings')">✕</button>
+    </div>
+    <div class="modal-body">
+
+      <div class="field">
+        <label>活動標題</label>
+        <input type="text" id="cfgTitle" placeholder="e.g. 生日驚喜抽獎" maxlength="20">
+      </div>
+
+      <div class="field">
+        <label>獎項設定</label>
+        <div class="prizes-editor" id="prizesEditor"></div>
+        <button class="btn-add-prize" onclick="addPrizeRow()">＋ 新增獎項</button>
+      </div>
+
+      <div class="field">
+        <label>券面標題文字</label>
+        <input type="text" id="cfgBrand" placeholder="e.g. ✦ 專屬の一番くじ" maxlength="20">
+      </div>
+
+      <div class="field">
+        <label>副標文字</label>
+        <input type="text" id="cfgSub" placeholder="e.g. 表面の店舗有口を確認の上、商品をお渡し下さい" maxlength="40">
+      </div>
+
+      <div class="field">
+        <label>底部備註</label>
+        <input type="text" id="cfgNote" placeholder="e.g. ※ 購入店舗のみ有効" maxlength="30">
+      </div>
+
+      <button class="btn-save" onclick="saveSettings()">儲存並重置抽獎</button>
+    </div>
+  </div>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
