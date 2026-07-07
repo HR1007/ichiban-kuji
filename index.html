@@ -36,7 +36,7 @@
     <!-- ticket rendered by JS -->
   </div>
   <div class="tear-hint" id="tearHint">
-    <span>👈 向左拖曳撕開</span>
+    <span>👆 向上拖曳撕開</span>
   </div>
 </div>
 
@@ -94,6 +94,15 @@
     </div>
   </div>
 </div>
+
+<!-- SVG clip-path: smooth scalloped bottom edge for tear overlay -->
+<svg width="0" height="0" style="position:absolute;pointer-events:none" aria-hidden="true">
+  <defs>
+    <clipPath id="tear-scallop" clipPathUnits="objectBoundingBox">
+      <path d="M0,0 H1 V1 Q0.875,0.88 0.75,1 Q0.625,0.88 0.5,1 Q0.375,0.88 0.25,1 Q0.125,0.88 0,1 Z"/>
+    </clipPath>
+  </defs>
+</svg>
 
 <script src="app.js"></script>
 </body>

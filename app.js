@@ -145,15 +145,15 @@ function confirmReset() {
    TICKET TEAR VIEW
 ══════════════════════════════════════ */
 let currentTicketIdx = null;
-let tearStartX = 0;
-let tearCurrentX = 0;
+let tearStartY = 0;
+let tearCurrentY = 0;
 let isTearing = false;
 let tearRevealed = false;
 
 function openTicket(idx) {
   currentTicketIdx = idx;
   tearRevealed = false;
-  tearCurrentX = 0;
+  tearCurrentY = 0;
 
   const t = tickets[idx];
   const prize = cfg.prizes[t.prizeIdx];
@@ -182,8 +182,7 @@ function openTicket(idx) {
           <div class="tear-brand-text">${escHtml(cfg.brand)}</div>
           <div class="tear-arrow-row">
             <div class="tear-arrow"></div>
-            <div class="tear-arrow" style="opacity:0.55"></div>
-            <span class="tear-hint-text">ここから開封してください</span>
+            <span class="tear-hint-text">ここからゆっくりめぐる</span>
           </div>
           <div class="tear-img-area">${emoji}</div>
           <div class="tear-bottom-text">HAPPY BIRTHDAY</div>
@@ -209,14 +208,14 @@ function openTicket(idx) {
 function onTearStart(e) {
   e.preventDefault();
   isTearing = true;
-  tearStartX = e.touches[0].clientX;
-  tearCurrentX = 0;
+  tearStartY = e.touches[0].clientY;
+  tearCurrentY = 0;
 }
 function onTearMove(e) {
   e.preventDefault();
   if (!isTearing) return;
-  const dx = tearStartX - e.touches[0].clientX;
-  updateTear(dx);
+  const dy = tearStartY - e.touches[0].clientY;
+  updateTear(dy);
 }
 function onTearEnd(e) {
   e.preventDefault();
@@ -225,13 +224,13 @@ function onTearEnd(e) {
 }
 function onTearStartM(e) {
   isTearing = true;
-  tearStartX = e.clientX;
-  tearCurrentX = 0;
+  tearStartY = e.clientY;
+  tearCurrentY = 0;
 }
 function onTearMoveM(e) {
   if (!isTearing) return;
-  const dx = tearStartX - e.clientX;
-  updateTear(dx);
+  const dy = tearStartY - e.clientY;
+  updateTear(dy);
 }
 function onTearEndM() {
   if (!isTearing) return;
@@ -239,16 +238,16 @@ function onTearEndM() {
   finishTear();
 }
 
-function updateTear(dx) {
+function updateTear(dy) {
   if (tearRevealed) return;
   const overlay = document.getElementById('tearOverlay');
   if (!overlay) return;
 
-  const clamped = Math.max(0, dx);
-  tearCurrentX = clamped;
+  const clamped = Math.max(0, dy);
+  tearCurrentY = clamped;
 
-  overlay.style.transform = `translateX(-${clamped}px)`;
-  overlay.style.opacity   = Math.max(0, 1 - clamped / 200);
+  overlay.style.transform = `translateY(-${clamped}px)`;
+  overlay.style.opacity   = Math.max(0, 1 - clamped / 180);
 
   if (clamped > 10) {
     document.getElementById('tearHint').classList.add('hidden');
@@ -259,13 +258,13 @@ function finishTear() {
   const ticket = document.getElementById('fullTicket');
   if (!ticket || tearRevealed) return;
 
-  if (tearCurrentX > 80) {
+  if (tearCurrentY > 80) {
     // Enough — animate rest of the way
     tearRevealed = true;
     const overlay = document.getElementById('tearOverlay');
     if (overlay) {
       overlay.style.transition = 'transform 0.35s ease-in, opacity 0.3s ease-in';
-      overlay.style.transform = 'translateX(-420px)';
+      overlay.style.transform = 'translateY(-300px)';
       overlay.style.opacity = '0';
     }
     // Remove listeners
@@ -282,11 +281,11 @@ function finishTear() {
     const overlay = document.getElementById('tearOverlay');
     if (overlay) {
       overlay.style.transition = 'transform 0.25s ease-out, opacity 0.25s ease-out';
-      overlay.style.transform = 'translateX(0)';
+      overlay.style.transform = 'translateY(0)';
       overlay.style.opacity   = '1';
       setTimeout(() => { if (overlay) overlay.style.transition = ''; }, 260);
     }
-    tearCurrentX = 0;
+    tearCurrentY = 0;
   }
 }
 
