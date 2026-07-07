@@ -26,7 +26,7 @@ const DEFAULT_CONFIG = {
   brand:    '✦ 專屬の一番くじ',
   sub:      '表面の店舗有口を確認の上、商品をお渡し下さい',
   note:     '※ 購入店舗のみ有効',
-  tearText: 'HAPPY BIRTHDAY',
+  tearText: 'ここからゆっくりめぐる',
   theme:    'blue',
   prizes: [
     { rank: 'A', name: '大獎',  color: '#e8c840', count: 1 },
@@ -183,10 +183,10 @@ function openTicket(idx) {
           <div class="tear-brand-text">${escHtml(cfg.brand)}</div>
           <div class="tear-arrow-row">
             <div class="tear-arrow"></div>
-            <span class="tear-hint-text">ここからゆっくりめぐる</span>
+            <span class="tear-hint-text">${escHtml(cfg.tearText || DEFAULT_CONFIG.tearText)}</span>
           </div>
           <div class="tear-img-area">${emoji}</div>
-          <div class="tear-bottom-text">${escHtml(cfg.tearText || DEFAULT_CONFIG.tearText)}</div>
+          <div class="tear-bottom-text">HAPPY BIRTHDAY</div>
         </div>
       </div>
     </div>
