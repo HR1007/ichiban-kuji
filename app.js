@@ -1,17 +1,38 @@
 /* ══════════════════════════════════════
    DATA & DEFAULTS
 ══════════════════════════════════════ */
+const THEMES = {
+  blue:   { name: '午夜藍', accent: '#1c5fa8', accentText: '#4fa3e8', bg: '#0e0e14', bg2: '#1a1a24', tear: '#b0c8e8', tearText: '#1a3a60' },
+  purple: { name: '星空紫', accent: '#7c4faa', accentText: '#b084e0', bg: '#12101e', bg2: '#1e1a2e', tear: '#c8b0e8', tearText: '#3a1a60' },
+  rose:   { name: '玫瑰金', accent: '#a84f6a', accentText: '#e880a8', bg: '#1a1015', bg2: '#261820', tear: '#e8b0c8', tearText: '#601a30' },
+  green:  { name: '翠綠',   accent: '#2d8a5e', accentText: '#50c878', bg: '#0e1612', bg2: '#1a2420', tear: '#b0e8cc', tearText: '#1a4030' },
+  orange: { name: '橘光',   accent: '#c06820', accentText: '#e89040', bg: '#1a1208', bg2: '#261e10', tear: '#e8d0b0', tearText: '#604020' },
+  mono:   { name: '銀月',   accent: '#505878', accentText: '#8090b8', bg: '#111118', bg2: '#1c1c28', tear: '#c0c8d8', tearText: '#303850' },
+};
+
+function applyTheme(themeId) {
+  const t = THEMES[themeId] || THEMES.blue;
+  const r = document.documentElement;
+  r.style.setProperty('--bg',          t.bg);
+  r.style.setProperty('--bg2',         t.bg2);
+  r.style.setProperty('--accent',      t.accent);
+  r.style.setProperty('--accent-text', t.accentText);
+  r.style.setProperty('--tear',        t.tear);
+  r.style.setProperty('--tear-text',   t.tearText);
+}
+
 const DEFAULT_CONFIG = {
   title:  '生日驚喜抽獎',
   brand:  '✦ 專屬の一番くじ',
   sub:    '表面の店舗有口を確認の上、商品をお渡し下さい',
   note:   '※ 購入店舗のみ有効',
+  theme:  'blue',
   prizes: [
     { rank: 'A', name: '大獎',  color: '#e8c840', count: 1 },
-    { rank: 'B', name: '二等獎',       color: '#c0a0e8', count: 2 },
-    { rank: 'C', name: '三等獎',   color: '#4fa3e8', count: 3 },
-    { rank: 'D', name: '四等獎',   color: '#e87040', count: 4 },
-    { rank: 'E', name: '五等獎',     color: '#50c878', count: 5 },
+    { rank: 'B', name: '二等獎', color: '#c0a0e8', count: 2 },
+    { rank: 'C', name: '三等獎', color: '#4fa3e8', count: 3 },
+    { rank: 'D', name: '四等獎', color: '#e87040', count: 4 },
+    { rank: 'E', name: '五等獎', color: '#50c878', count: 5 },
   ],
 };
 
@@ -161,7 +182,7 @@ function openTicket(idx) {
           <div class="tear-brand-text">${escHtml(cfg.brand)}</div>
           <div class="tear-arrow-row">
             <div class="tear-arrow"></div>
-            <span style="font-size:10px;color:#1a3a60;font-weight:700">ここからゆっくりめぐる</span>
+            <span class="tear-hint-text">ここからゆっくりめぐる</span>
           </div>
           <div class="tear-img-area">${emoji}</div>
           <div class="tear-bottom-text">HAPPY BIRTHDAY</div>
@@ -325,13 +346,41 @@ function backToLobby() {
    SETTINGS MODAL
 ══════════════════════════════════════ */
 function openSettings() {
-  // Populate fields
   document.getElementById('cfgTitle').value = cfg.title;
   document.getElementById('cfgBrand').value = cfg.brand;
   document.getElementById('cfgSub').value   = cfg.sub;
   document.getElementById('cfgNote').value  = cfg.note;
   renderPrizeEditor();
+  renderThemeSwatches(cfg.theme || 'blue');
   openModal('modalSettings');
+}
+
+function renderThemeSwatches(selected) {
+  const container = document.getElementById('themeSwatches');
+  container.innerHTML = '';
+  Object.entries(THEMES).forEach(([id, t]) => {
+    const wrap = document.createElement('div');
+    wrap.className = 'theme-swatch-wrap';
+
+    const btn = document.createElement('button');
+    btn.className = 'theme-swatch' + (id === selected ? ' active' : '');
+    btn.style.background = t.accent;
+    btn.title = t.name;
+    btn.onclick = () => {
+      cfg.theme = id;
+      applyTheme(id);
+      container.querySelectorAll('.theme-swatch').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+    };
+
+    const label = document.createElement('span');
+    label.className = 'theme-swatch-name';
+    label.textContent = t.name;
+
+    wrap.appendChild(btn);
+    wrap.appendChild(label);
+    container.appendChild(wrap);
+  });
 }
 
 function renderPrizeEditor() {
@@ -416,6 +465,7 @@ function escHtml(s) {
 /* ══════════════════════════════════════
    INIT
 ══════════════════════════════════════ */
+applyTheme(cfg.theme || 'blue');
 ensureTickets();
 renderLobby();
 showView('viewLobby');

@@ -1,9 +1,21 @@
 /* ── Reset ── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
 html, body { height: 100%; overflow: hidden; }
+html { background: var(--bg); }
+
+/* ── CSS Variables (default: blue theme) ── */
+:root {
+  --bg:          #0e0e14;
+  --bg2:         #1a1a24;
+  --accent:      #1c5fa8;
+  --accent-text: #4fa3e8;
+  --tear:        #b0c8e8;
+  --tear-text:   #1a3a60;
+}
+
 body {
   font-family: -apple-system, BlinkMacSystemFont, 'Hiragino Sans', 'Yu Gothic', 'Noto Sans JP', sans-serif;
-  background: #0e0e14;
+  background: var(--bg);
   color: #f0ede8;
   max-width: 430px;
   margin: 0 auto;
@@ -32,7 +44,7 @@ body {
 .lobby-jp {
   font-size: 10px; font-weight: 700;
   letter-spacing: 0.2em; text-transform: uppercase;
-  color: #4fa3e8;
+  color: var(--accent-text);
 }
 .lobby-title {
   font-size: 20px; font-weight: 800;
@@ -105,7 +117,7 @@ body {
   display: flex; flex-direction: column;
 }
 .mini-ticket-top {
-  background: #1c5fa8;
+  background: var(--accent);
   padding: 3px 5px;
   font-size: 7px; font-weight: 700;
   color: #fff;
@@ -167,7 +179,7 @@ body {
   justify-content: center;
   position: relative;
   overflow: hidden;
-  background: #0e0e14;
+  background: var(--bg);
 }
 
 /* Full-size ticket */
@@ -182,7 +194,7 @@ body {
 }
 
 .ticket-header-band {
-  background: #1c5fa8;
+  background: var(--accent);
   padding: 10px 16px;
   display: flex;
   flex-direction: column;
@@ -241,9 +253,8 @@ body {
   transition: none;
 }
 .tear-top {
-  /* the part that "peels away" */
   flex-shrink: 0;
-  background: #b0c8e8;
+  background: var(--tear);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -254,9 +265,12 @@ body {
 }
 .tear-brand-text {
   font-size: 12px; font-weight: 700;
-  color: #1a3a60; letter-spacing: 0.06em;
+  color: var(--tear-text); letter-spacing: 0.06em;
   margin-bottom: 8px;
   align-self: flex-start;
+}
+.tear-hint-text {
+  font-size: 10px; color: var(--tear-text); font-weight: 700;
 }
 .tear-arrow-row {
   display: flex;
@@ -266,7 +280,7 @@ body {
 }
 .tear-arrow {
   width: 28px; height: 28px;
-  background: #1c5fa8;
+  background: var(--accent);
   clip-path: polygon(50% 0%,100% 50%,75% 50%,75% 100%,25% 100%,25% 50%,0% 50%);
   animation: bounceDown 1s infinite;
 }
@@ -284,7 +298,7 @@ body {
 }
 .tear-bottom-text {
   font-size: 10px;
-  color: #1a3a60;
+  color: var(--tear-text);
   font-weight: 600;
   padding: 6px 0 10px;
   letter-spacing: 0.04em;
@@ -296,7 +310,7 @@ body {
   bottom: -12px;
   left: 0; right: 0;
   height: 24px;
-  background: #b0c8e8;
+  background: var(--tear);
   clip-path: polygon(
     0% 0%,4% 60%,8% 10%,12% 70%,16% 15%,20% 65%,24% 8%,
     28% 55%,32% 5%,36% 60%,40% 12%,44% 58%,48% 6%,52% 62%,
@@ -409,7 +423,7 @@ body {
 }
 .modal-overlay.open { display: flex; }
 .modal-sheet {
-  background: #1a1a24;
+  background: var(--bg2);
   border-radius: 22px 22px 0 0;
   width: 100%; max-width: 430px;
   margin: 0 auto;
@@ -461,7 +475,7 @@ body {
   font-family: inherit;
   transition: border-color 0.15s;
 }
-.field input:focus { outline: none; border-color: #4fa3e8; }
+.field input:focus { outline: none; border-color: var(--accent-text); }
 .field input::placeholder { color: rgba(255,255,255,0.2); }
 
 /* Prize rows editor */
@@ -493,7 +507,7 @@ body {
   color: #fff; text-align: center;
   font-family: inherit;
 }
-.prize-rank-input:focus { outline: none; border-color: #4fa3e8; }
+.prize-rank-input:focus { outline: none; border-color: var(--accent-text); }
 .prize-name-input {
   flex: 1;
   background: rgba(255,255,255,0.08);
@@ -503,7 +517,7 @@ body {
   font-size: 13px; color: #f0ede8;
   font-family: inherit;
 }
-.prize-name-input:focus { outline: none; border-color: #4fa3e8; }
+.prize-name-input:focus { outline: none; border-color: var(--accent-text); }
 .prize-count-input {
   width: 46px; flex-shrink: 0;
   background: rgba(255,255,255,0.08);
@@ -513,7 +527,7 @@ body {
   font-size: 13px; color: #fff; text-align: center;
   font-family: inherit;
 }
-.prize-count-input:focus { outline: none; border-color: #4fa3e8; }
+.prize-count-input:focus { outline: none; border-color: var(--accent-text); }
 .prize-count-label {
   font-size: 11px; color: rgba(255,255,255,0.35);
   flex-shrink: 0;
@@ -544,15 +558,56 @@ body {
 
 .btn-save {
   padding: 14px;
-  background: #1c5fa8;
+  background: var(--accent);
   color: #fff;
   border: none; border-radius: 12px;
   font-size: 15px; font-weight: 700;
   cursor: pointer; font-family: inherit;
-  transition: background 0.15s;
+  transition: filter 0.15s;
   letter-spacing: 0.02em;
 }
-.btn-save:active { background: #1550a0; }
+.btn-save:active { filter: brightness(0.85); }
+
+/* ── Theme swatches ── */
+.theme-swatches {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.theme-swatch {
+  width: 38px; height: 38px;
+  border-radius: 50%;
+  cursor: pointer;
+  border: none;
+  outline: 3px solid transparent;
+  outline-offset: 3px;
+  transition: outline-color 0.15s, transform 0.12s;
+  position: relative;
+  flex-shrink: 0;
+}
+.theme-swatch:active { transform: scale(0.9); }
+.theme-swatch.active {
+  outline-color: #fff;
+  transform: scale(1.15);
+}
+.theme-swatch.active::after {
+  content: '✓';
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  color: #fff;
+  font-size: 15px; font-weight: 900;
+  text-shadow: 0 1px 4px rgba(0,0,0,0.5);
+  pointer-events: none;
+}
+.theme-swatch-wrap {
+  display: flex; flex-direction: column;
+  align-items: center; gap: 4px;
+}
+.theme-swatch-name {
+  font-size: 10px; color: rgba(255,255,255,0.4);
+  font-weight: 600; white-space: nowrap;
+}
 
 /* ── Empty state ── */
 .lobby-empty {
@@ -564,3 +619,32 @@ body {
 }
 .lobby-empty-icon { font-size: 52px; }
 .lobby-empty p { font-size: 14px; line-height: 1.5; }
+
+/* ══════════════════════════════════
+   RESPONSIVE
+══════════════════════════════════ */
+@media (min-width: 560px) {
+  body { max-width: 520px; }
+  .tickets-grid { grid-template-columns: repeat(4, 1fr); }
+  .mini-ticket-num { font-size: 20px; }
+  .lobby-header { padding: 22px 24px 12px; }
+  .modal-sheet { max-width: 520px; }
+}
+
+@media (min-width: 900px) {
+  body {
+    max-width: 620px;
+    border-left: 1px solid rgba(255,255,255,0.06);
+    border-right: 1px solid rgba(255,255,255,0.06);
+    box-shadow: 0 0 80px rgba(0,0,0,0.4);
+  }
+  .tickets-grid { grid-template-columns: repeat(5, 1fr); }
+  .mini-ticket-num { font-size: 18px; }
+  .lobby-header { padding: 28px 30px 16px; }
+  .lobby-title { font-size: 24px; }
+  .lobby-jp { font-size: 11px; }
+  .full-ticket { width: min(380px, 80vw); }
+  .reveal-card { width: min(340px, 82vw); }
+  .modal-sheet { max-width: 620px; }
+  .icon-btn { width: 42px; height: 42px; }
+}
