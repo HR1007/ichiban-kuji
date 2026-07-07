@@ -86,6 +86,11 @@
       </div>
 
       <div class="field">
+        <label>撕開提示文字</label>
+        <input type="text" id="cfgTearText" placeholder="e.g. HAPPY BIRTHDAY" maxlength="30">
+      </div>
+
+      <div class="field">
         <label>主題配色</label>
         <div class="theme-swatches" id="themeSwatches"></div>
       </div>
@@ -94,15 +99,6 @@
     </div>
   </div>
 </div>
-
-<!-- SVG clip-path: smooth scalloped bottom edge for tear overlay -->
-<svg width="0" height="0" style="position:absolute;pointer-events:none" aria-hidden="true">
-  <defs>
-    <clipPath id="tear-scallop" clipPathUnits="objectBoundingBox">
-      <path d="M0,0 H1 V1 Q0.875,0.88 0.75,1 Q0.625,0.88 0.5,1 Q0.375,0.88 0.25,1 Q0.125,0.88 0,1 Z"/>
-    </clipPath>
-  </defs>
-</svg>
 
 <script src="app.js"></script>
 </body>

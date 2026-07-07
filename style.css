@@ -244,14 +244,13 @@ body {
 .tear-overlay {
   position: absolute;
   inset: 0;
+  border-radius: 12px;
   display: flex;
   flex-direction: column;
   overflow: hidden;
   pointer-events: none;
   z-index: 10;
   transition: none;
-  /* Smooth scalloped bottom edge — references SVG clipPath #tear-scallop */
-  clip-path: url(#tear-scallop);
 }
 .tear-top {
   flex-shrink: 0;

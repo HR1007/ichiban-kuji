@@ -22,11 +22,12 @@ function applyTheme(themeId) {
 }
 
 const DEFAULT_CONFIG = {
-  title:  '生日驚喜抽獎',
-  brand:  '✦ 專屬の一番くじ',
-  sub:    '表面の店舗有口を確認の上、商品をお渡し下さい',
-  note:   '※ 購入店舗のみ有効',
-  theme:  'blue',
+  title:    '生日驚喜抽獎',
+  brand:    '✦ 專屬の一番くじ',
+  sub:      '表面の店舗有口を確認の上、商品をお渡し下さい',
+  note:     '※ 購入店舗のみ有効',
+  tearText: 'HAPPY BIRTHDAY',
+  theme:    'blue',
   prizes: [
     { rank: 'A', name: '大獎',  color: '#e8c840', count: 1 },
     { rank: 'B', name: '二等獎', color: '#c0a0e8', count: 2 },
@@ -185,7 +186,7 @@ function openTicket(idx) {
             <span class="tear-hint-text">ここからゆっくりめぐる</span>
           </div>
           <div class="tear-img-area">${emoji}</div>
-          <div class="tear-bottom-text">HAPPY BIRTHDAY</div>
+          <div class="tear-bottom-text">${escHtml(cfg.tearText || DEFAULT_CONFIG.tearText)}</div>
         </div>
       </div>
     </div>
@@ -343,10 +344,11 @@ function backToLobby() {
    SETTINGS MODAL
 ══════════════════════════════════════ */
 function openSettings() {
-  document.getElementById('cfgTitle').value = cfg.title;
-  document.getElementById('cfgBrand').value = cfg.brand;
-  document.getElementById('cfgSub').value   = cfg.sub;
-  document.getElementById('cfgNote').value  = cfg.note;
+  document.getElementById('cfgTitle').value    = cfg.title;
+  document.getElementById('cfgBrand').value    = cfg.brand;
+  document.getElementById('cfgSub').value      = cfg.sub;
+  document.getElementById('cfgNote').value     = cfg.note;
+  document.getElementById('cfgTearText').value = cfg.tearText || DEFAULT_CONFIG.tearText;
   renderPrizeEditor();
   renderThemeSwatches(cfg.theme || 'blue');
   openModal('modalSettings');
@@ -426,10 +428,11 @@ function deletePrizeRow(i) {
 }
 
 function saveSettings() {
-  cfg.title = document.getElementById('cfgTitle').value.trim() || DEFAULT_CONFIG.title;
-  cfg.brand = document.getElementById('cfgBrand').value.trim() || DEFAULT_CONFIG.brand;
-  cfg.sub   = document.getElementById('cfgSub').value.trim()   || DEFAULT_CONFIG.sub;
-  cfg.note  = document.getElementById('cfgNote').value.trim()  || DEFAULT_CONFIG.note;
+  cfg.title    = document.getElementById('cfgTitle').value.trim()    || DEFAULT_CONFIG.title;
+  cfg.brand    = document.getElementById('cfgBrand').value.trim()    || DEFAULT_CONFIG.brand;
+  cfg.sub      = document.getElementById('cfgSub').value.trim()      || DEFAULT_CONFIG.sub;
+  cfg.note     = document.getElementById('cfgNote').value.trim()     || DEFAULT_CONFIG.note;
+  cfg.tearText = document.getElementById('cfgTearText').value.trim() || DEFAULT_CONFIG.tearText;
   // Prizes already mutated live in cfg.prizes
 
   // Validate
