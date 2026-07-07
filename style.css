@@ -302,6 +302,8 @@ body {
   font-weight: 600;
   padding: 6px 0 10px;
   letter-spacing: 0.04em;
+  text-align: center;
+  width: 100%;
 }
 
 

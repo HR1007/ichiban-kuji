@@ -27,6 +27,7 @@ const DEFAULT_CONFIG = {
   sub:      '表面の店舗有口を確認の上、商品をお渡し下さい',
   note:     '※ 購入店舗のみ有効',
   tearText: 'ここからゆっくりめぐる',
+  tearSub:  'HAPPY BIRTHDAY',
   theme:    'blue',
   prizes: [
     { rank: 'A', name: '大獎',  color: '#e8c840', count: 1 },
@@ -186,7 +187,7 @@ function openTicket(idx) {
             <span class="tear-hint-text">${escHtml(cfg.tearText || DEFAULT_CONFIG.tearText)}</span>
           </div>
           <div class="tear-img-area">${emoji}</div>
-          <div class="tear-bottom-text">HAPPY BIRTHDAY</div>
+          <div class="tear-bottom-text">${escHtml(cfg.tearSub || DEFAULT_CONFIG.tearSub)}</div>
         </div>
       </div>
     </div>
@@ -349,6 +350,7 @@ function openSettings() {
   document.getElementById('cfgSub').value      = cfg.sub;
   document.getElementById('cfgNote').value     = cfg.note;
   document.getElementById('cfgTearText').value = cfg.tearText || DEFAULT_CONFIG.tearText;
+  document.getElementById('cfgTearSub').value  = cfg.tearSub  || DEFAULT_CONFIG.tearSub;
   renderPrizeEditor();
   renderThemeSwatches(cfg.theme || 'blue');
   openModal('modalSettings');
@@ -433,6 +435,7 @@ function saveSettings() {
   cfg.sub      = document.getElementById('cfgSub').value.trim()      || DEFAULT_CONFIG.sub;
   cfg.note     = document.getElementById('cfgNote').value.trim()     || DEFAULT_CONFIG.note;
   cfg.tearText = document.getElementById('cfgTearText').value.trim() || DEFAULT_CONFIG.tearText;
+  cfg.tearSub  = document.getElementById('cfgTearSub').value.trim()  || DEFAULT_CONFIG.tearSub;
   // Prizes already mutated live in cfg.prizes
 
   // Validate
