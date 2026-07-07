@@ -145,15 +145,15 @@ function confirmReset() {
    TICKET TEAR VIEW
 ══════════════════════════════════════ */
 let currentTicketIdx = null;
-let tearStartY = 0;
-let tearCurrentY = 0;
+let tearStartX = 0;
+let tearCurrentX = 0;
 let isTearing = false;
 let tearRevealed = false;
 
 function openTicket(idx) {
   currentTicketIdx = idx;
   tearRevealed = false;
-  tearCurrentY = 0;
+  tearCurrentX = 0;
 
   const t = tickets[idx];
   const prize = cfg.prizes[t.prizeIdx];
@@ -182,11 +182,11 @@ function openTicket(idx) {
           <div class="tear-brand-text">${escHtml(cfg.brand)}</div>
           <div class="tear-arrow-row">
             <div class="tear-arrow"></div>
-            <span class="tear-hint-text">ここからゆっくりめぐる</span>
+            <div class="tear-arrow" style="opacity:0.55"></div>
+            <span class="tear-hint-text">ここから開封してください</span>
           </div>
           <div class="tear-img-area">${emoji}</div>
           <div class="tear-bottom-text">HAPPY BIRTHDAY</div>
-          <div class="tear-edge"></div>
         </div>
       </div>
     </div>
@@ -209,14 +209,14 @@ function openTicket(idx) {
 function onTearStart(e) {
   e.preventDefault();
   isTearing = true;
-  tearStartY = e.touches[0].clientY;
-  tearCurrentY = 0;
+  tearStartX = e.touches[0].clientX;
+  tearCurrentX = 0;
 }
 function onTearMove(e) {
   e.preventDefault();
   if (!isTearing) return;
-  const dy = tearStartY - e.touches[0].clientY;
-  updateTear(dy);
+  const dx = tearStartX - e.touches[0].clientX;
+  updateTear(dx);
 }
 function onTearEnd(e) {
   e.preventDefault();
@@ -225,13 +225,13 @@ function onTearEnd(e) {
 }
 function onTearStartM(e) {
   isTearing = true;
-  tearStartY = e.clientY;
-  tearCurrentY = 0;
+  tearStartX = e.clientX;
+  tearCurrentX = 0;
 }
 function onTearMoveM(e) {
   if (!isTearing) return;
-  const dy = tearStartY - e.clientY;
-  updateTear(dy);
+  const dx = tearStartX - e.clientX;
+  updateTear(dx);
 }
 function onTearEndM() {
   if (!isTearing) return;
@@ -239,17 +239,16 @@ function onTearEndM() {
   finishTear();
 }
 
-function updateTear(dy) {
+function updateTear(dx) {
   if (tearRevealed) return;
   const overlay = document.getElementById('tearOverlay');
   if (!overlay) return;
 
-  const clamped = Math.max(0, dy);
-  tearCurrentY = clamped;
+  const clamped = Math.max(0, dx);
+  tearCurrentX = clamped;
 
-  // Move overlay upward
-  overlay.style.transform = `translateY(-${clamped}px)`;
-  overlay.style.opacity   = Math.max(0, 1 - clamped / 180);
+  overlay.style.transform = `translateX(-${clamped}px)`;
+  overlay.style.opacity   = Math.max(0, 1 - clamped / 200);
 
   if (clamped > 10) {
     document.getElementById('tearHint').classList.add('hidden');
@@ -260,13 +259,13 @@ function finishTear() {
   const ticket = document.getElementById('fullTicket');
   if (!ticket || tearRevealed) return;
 
-  if (tearCurrentY > 80) {
+  if (tearCurrentX > 80) {
     // Enough — animate rest of the way
     tearRevealed = true;
     const overlay = document.getElementById('tearOverlay');
     if (overlay) {
       overlay.style.transition = 'transform 0.35s ease-in, opacity 0.3s ease-in';
-      overlay.style.transform = 'translateY(-300px)';
+      overlay.style.transform = 'translateX(-420px)';
       overlay.style.opacity = '0';
     }
     // Remove listeners
@@ -283,11 +282,11 @@ function finishTear() {
     const overlay = document.getElementById('tearOverlay');
     if (overlay) {
       overlay.style.transition = 'transform 0.25s ease-out, opacity 0.25s ease-out';
-      overlay.style.transform = 'translateY(0)';
+      overlay.style.transform = 'translateX(0)';
       overlay.style.opacity   = '1';
       setTimeout(() => { if (overlay) overlay.style.transition = ''; }, 260);
     }
-    tearCurrentY = 0;
+    tearCurrentX = 0;
   }
 }
 
@@ -305,8 +304,7 @@ function revealPrize(idx) {
   // Render reveal card
   document.getElementById('revealCard').innerHTML = `
     <div class="reveal-ticket-top" style="background:${prize.color}dd">
-      <div class="reveal-ticket-rank" style="color:rgba(0,0,0,0.25)">${escHtml(prize.rank)}</div>
-      <div class="reveal-ticket-rank" style="color:#fff;margin-top:-40px">${escHtml(prize.rank)}</div>
+      <div class="reveal-ticket-rank">${escHtml(prize.rank)}</div>
       <div class="reveal-ticket-prize">${escHtml(prize.name)}</div>
     </div>
     <div class="reveal-ticket-note">${escHtml(cfg.note)}</div>
